@@ -34,7 +34,9 @@
   },
   "scripts": {
     "test": "gulp test",
-    "build": "gulp build"
+    "build": "gulp build",
+    "serve": "gulp watch",
+    "release": "gulp tag"
   },
   "author": "Alon Yehezkel <alony@wix.com>",
   "license": "ISC"
