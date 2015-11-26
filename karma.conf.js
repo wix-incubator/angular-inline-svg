@@ -9,11 +9,12 @@ module.exports = function(config) {
 
 		// List of files / patterns to load in the browser
 		files: [
+			'bower_components/es5-shim/es5-shim.js',
 			'bower_components/angular/angular.js',
 			'bower_components/angular-sanitize/angular-sanitize.js',
 			'bower_components/angular-mocks/angular-mocks.js',
 
-			'dist/*.js',
+			'dist/ngInlineSvg.js',
 			'test/**/*.spec.js'
 		],
 
@@ -38,7 +39,7 @@ module.exports = function(config) {
 		// - Safari (only Mac)
 		// - PhantomJS
 		// - IE (only Windows)
-		browsers: [process.env.TRAVIS ? 'Firefox' : 'PhantomJS'],
+		browsers: [process.env.TRAVIS ? 'Firefox' : 'Chrome'],
 
 		// Continuous Integration mode
 		// if true, it capture browsers, run tests and exit

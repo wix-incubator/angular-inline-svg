@@ -2,6 +2,7 @@
 
 describe('Directive: svgInlineSymbol', function () {
 	var Driver = function () {
+		var driver = this;
 		var $document;
 		var element;
 		var template = '<inline-svg-symbol sprite="{{sprite}}" symbol="outerSymbolId" />';
@@ -20,18 +21,28 @@ describe('Directive: svgInlineSymbol', function () {
 					element = $compile(element)(scope);
 					$rootScope.$apply();
 				});
-				return this;
+				return driver;
 			},
 			sprite: function (sprite, content) {
 				inject(function ($httpBackend) {
 					$httpBackend.whenGET(sprite).respond(content);
 				});
-				return this;
+				return driver;
 			}
 		};
 
 		this.when = {
-			loaded: function () {
+			includeSymbol: function (sprite, symbolId) {
+				element = angular.element(template.replace('{{sprite}}', sprite));
+				inject(function ($compile, $rootScope) {
+					var scope = $rootScope.$new();
+					scope.outerSymbolId = symbolId;
+					element = $compile(element)(scope);
+					$rootScope.$apply();
+				});
+				return driver;
+			},
+			spriteLoaded       : function () {
 				try {
 					inject(function ($httpBackend) {
 						$httpBackend.flush();
@@ -52,8 +63,8 @@ describe('Directive: svgInlineSymbol', function () {
 			domSprites: function () {
 				return $document[0].querySelectorAll('svg[data-sprite]');
 			},
-			symbol    : function (symbolId) {
-				return element[0].querySelector('use').getAttribute('xlink:href') === symbolId;
+			symbols   : function () {
+				return element[0].querySelectorAll('use');
 			}
 		};
 
@@ -83,26 +94,28 @@ describe('Directive: svgInlineSymbol', function () {
 	});
 
 	it('should create one symbol with sprite', function () {
-		driver.given
-			.sprite('mySprite.html', '<svg></svg>')
-			.symbol('mySprite.html', '#myId');
-		driver.when.loaded();
+		driver.given.sprite('mySprite.html',
+			'<svg>' +
+			' <g id="myId">{{1+2}}</g>' +
+			'</svg>')
+			.when.includeSymbol('mySprite.html', '#myId')
+			.when.spriteLoaded();
 		expect(driver.get.domSprites().length).toBe(1);
 		expect(driver.get.domSprites()).toBeHidden();
-		expect(driver.get.symbol('#myId')).toBeTruthy();
+		expect(driver.get.domSprites()[0].querySelector('#myId').textContent).toBe('3');
+		expect(driver.get.symbols()[0].getAttribute('xlink:href') === '#myId').toBeTruthy();
 	});
 
 	it('should create one sprite for each one', function () {
-		driver.given
-			.sprite('mySprite1.html', '<svg><g id="myId1"></g><g id="myId2"></g></svg>')
-			.sprite('mySprite2.html', '<svg><g id="myId3"></g></svg>')
-			.symbol('mySprite1.html', '#myId1');
-		driver.given.symbol('mySprite1.html', '#myId2');
-		driver.when.loaded();
+		driver.given.sprite('mySprite1.html', '<svg><g id="myId1"></g><g id="myId2"></g></svg>')
+			.given.sprite('mySprite2.html', '<svg><g id="myId3"></g></svg>')
+			.when.includeSymbol('mySprite1.html', '#myId1')
+			.when.includeSymbol('mySprite1.html', '#myId2')
+			.when.spriteLoaded();
 		expect(driver.get.domSprites().length).toBe(1);
 
-		driver.given.symbol('mySprite2.html', '#myId3');
-		driver.when.loaded();
+		driver.when.includeSymbol('mySprite2.html', '#myId3')
+			.when.spriteLoaded();
 		expect(driver.get.domSprites().length).toBe(2);
 	});
 });

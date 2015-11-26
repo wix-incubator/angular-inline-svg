@@ -1,7 +1,7 @@
 /*!
  * angular-inline-svg
  * 
- * Version: 0.0.0 - 2015-11-26T12:32:32.805Z
+ * Version: 0.0.0 - 2015-11-26T22:31:43.846Z
  * License: ISC
  */
 
@@ -11,7 +11,7 @@
 
 	angular
 		.module('inline-svg', [])
-		.directive('inlineSvgSymbol', ['$document', '$http', '$templateCache', function ($document, $http, $templateCache) {
+		.directive('inlineSvgSymbol', ['$document', '$http', '$templateCache', '$compile', '$rootScope', function ($document, $http, $templateCache, $compile, $rootScope) {
 			var sprites = [];
 			return {
 				restrict: 'E',
@@ -26,11 +26,12 @@
 					if (sprites.indexOf(sprite) < 0) {
 						sprites.push(sprite);
 						$http.get(sprite, {cache: $templateCache}).then(function (response) {
-							var $spriteSVG = angular.element(response.data);
-							$spriteSVG
+							var spriteSvg = angular.element(response.data);
+							spriteSvg
 								.attr('class', 'ng-hide') // hide
 								.attr('data-sprite', ''); // mark
-							angular.element($document[0].body).prepend($spriteSVG);
+							spriteSvg = $compile(spriteSvg)($rootScope);
+							angular.element($document[0].body).prepend(spriteSvg);
 						});
 					}
 				}
