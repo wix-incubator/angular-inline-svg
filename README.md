@@ -1,6 +1,8 @@
 # AngularJS inline-svg component [![Build Status](https://travis-ci.org/alonn24/angular-inline-svg.svg?branch=master)](https://travis-ci.org/alonn24/angular-inline-svg)
 
-This directive allows you to add inline svg symbol with sprites.
+* Include svg sprites one time at the top of the document.
+* Add angular binding, translations, directives, etc. to the svg sprite.
+* Use inline svg symbol using `<use>`.
 
 # Requirements
 - AngularJS
@@ -10,7 +12,7 @@ We use [bower](http://bower.io/) for dependency management.  Install and save to
 ```
 $ bower install angular-inline-svg --save
 ```
-Include teh script from your `bower_components` folder:
+Include the script from your `bower_components` folder:
 ```html
 <script type="text/javascript" src="bower_components/angular-inline-svg/dist/ngInlineSvg.min.js"></script>
 ```
@@ -28,8 +30,7 @@ Create a symbol sprite (e.g. `views/mySvgSymbols.html`) that loks like:
 </svg>
 ```
 
-Include a new symbol:
-
+Include a new symbol in your app:
 ```html
 <inline-svg-symbol
 		sprite="views/mySvgSymbols.html"
