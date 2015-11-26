@@ -10,10 +10,10 @@ var es = require('event-stream');
 var del = require('del');
 var uglify = require('gulp-uglify');
 var minifyHtml = require('gulp-minify-html');
-var minifyCSS = require('gulp-minify-css');
 var templateCache = require('gulp-angular-templatecache');
 var gutil = require('gulp-util');
 var plumber = require('gulp-plumber');//To prevent pipe breaking caused by errors at 'watch'
+require('gulp-release-tasks')(gulp);
 
 var config = {
 	pkg   : JSON.parse(fs.readFileSync('./package.json')),
