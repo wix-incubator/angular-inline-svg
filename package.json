@@ -1,6 +1,6 @@
 {
   "name": "angular-inline-svg",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "inline svg component for angular",
   "main": "dist/ngInlineSvg.min.js",
   "repository": {
