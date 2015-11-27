@@ -39,5 +39,5 @@
     "release": "gulp tag"
   },
   "author": "Alon Yehezkel <alony@wix.com>",
-  "license": "ISC"
+  "license": "MIT"
 }
