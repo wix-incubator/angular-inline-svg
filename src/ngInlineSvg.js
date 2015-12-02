@@ -3,7 +3,8 @@
 
 	angular
 		.module('inline-svg', [])
-		.directive('inlineSvgSymbol', ['$document', '$http', '$templateCache', '$compile', '$rootScope', function ($document, $http, $templateCache, $compile, $rootScope) {
+		/* @ngInject */
+		.directive('inlineSvgSymbol', function ($document, $http, $templateCache, $compile, $rootScope) {
 			var sprites = [];
 			return {
 				restrict: 'E',
@@ -28,5 +29,5 @@
 					}
 				}
 			};
-		}]);
+		});
 })();

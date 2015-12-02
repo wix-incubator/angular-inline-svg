@@ -42,9 +42,7 @@ Include a new symbol in your app:
 * Install local dev dependencies: npm install && bower install in repository directory
 
 ## Development commands:
-* gulp - to jshint, build and test
-* gulp build - to jshint and build
-* gulp test - for one-time test with karma (also build and jshint)
-* gulp serve - to watch src files to jshint, build and test when changed
+* npm run build - to clean, jshint, build and test
+* npm run serve - to watch src files to jshint, build and test when changed
 
 When issuing a pull request, please exclude changes from the "dist" folder to avoid merge conflicts.

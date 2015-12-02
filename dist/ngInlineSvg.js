@@ -1,7 +1,7 @@
 /*!
  * angular-inline-svg
  * 
- * Version: 0.0.0 - 2015-11-26T22:31:43.846Z
+ * Version: 0.0.2 - 2015-12-02T10:01:26.266Z
  * License: ISC
  */
 
@@ -11,7 +11,8 @@
 
 	angular
 		.module('inline-svg', [])
-		.directive('inlineSvgSymbol', ['$document', '$http', '$templateCache', '$compile', '$rootScope', function ($document, $http, $templateCache, $compile, $rootScope) {
+		/* @ngInject */
+		.directive('inlineSvgSymbol', ["$document", "$http", "$templateCache", "$compile", "$rootScope", function ($document, $http, $templateCache, $compile, $rootScope) {
 			var sprites = [];
 			return {
 				restrict: 'E',

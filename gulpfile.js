@@ -1,18 +1,21 @@
 var fs = require('fs');
 var gulp = require('gulp');
 var karma = require('karma').server;
+var es = require('event-stream');
+var del = require('del');
+
+// gulp tasks
+var gutil = require('gulp-util');
 var concat = require('gulp-concat');
 var jshint = require('gulp-jshint');
 var header = require('gulp-header');
 var footer = require('gulp-footer');
 var rename = require('gulp-rename');
-var es = require('event-stream');
-var del = require('del');
+var ngAnnotate = require('gulp-ng-annotate');
 var uglify = require('gulp-uglify');
 var minifyHtml = require('gulp-minify-html');
-var templateCache = require('gulp-angular-templatecache');
-var gutil = require('gulp-util');
 var plumber = require('gulp-plumber');//To prevent pipe breaking caused by errors at 'watch'
+
 require('gulp-release-tasks')(gulp);
 
 var config = {
@@ -25,7 +28,7 @@ var config = {
 	' */\n\n\n'
 };
 
-gulp.task('default', ['build', 'test']);
+gulp.task('default', ['clean', 'build', 'test']);
 gulp.task('build', ['scripts']);
 gulp.task('test', ['build', 'karma']);
 
@@ -38,28 +41,18 @@ gulp.task('clean', function (cb) {
 });
 
 gulp.task('scripts', ['clean'], function () {
-
-	var buildTemplates = function () {
-		return gulp.src('src/**/*.html')
-			.pipe(minifyHtml({
-				empty : true,
-				spare : true,
-				quotes: true
-			}))
-			.pipe(templateCache({module: 'inline-svg'}));
-	};
-
 	var buildLib = function () {
 		return gulp.src(['src/*.js'])
 			.pipe(plumber({
 				errorHandler: handleError
 			}))
+			.pipe(ngAnnotate())
 			.pipe(jshint())
 			.pipe(jshint.reporter('jshint-stylish'))
 			.pipe(jshint.reporter('fail'));
 	};
 
-	return es.merge(buildLib(), buildTemplates())
+	return es.merge(buildLib())
 		.pipe(plumber({
 			errorHandler: handleError
 		}))
