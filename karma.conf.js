@@ -9,11 +9,8 @@ module.exports = function(config) {
 
 		// List of files / patterns to load in the browser
 		files: [
-			'bower_components/es5-shim/es5-shim.js',
-			'bower_components/angular/angular.js',
-			'bower_components/angular-sanitize/angular-sanitize.js',
-			'bower_components/angular-mocks/angular-mocks.js',
-
+			'node_modules/angular/angular.js',
+			'node_modules/angular-mocks/angular-mocks.js',
 			'dist/ngInlineSvg.js',
 			'test/**/*.spec.js'
 		],
