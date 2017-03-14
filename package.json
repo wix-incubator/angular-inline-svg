@@ -6,6 +6,9 @@
   "repository": {
     "url": "git://github.com/alonn24/angular-svg-inline.git"
   },
+  "files": [
+    "dist"
+  ],
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
