@@ -6,6 +6,10 @@
   "repository": {
     "url": "git://github.com/alonn24/angular-svg-inline.git"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "private": false,
   "devDependencies": {
     "bower": "~1.3",
     "del": "~0.1.1",
@@ -31,13 +35,15 @@
     "karma-firefox-launcher": "~0.1",
     "karma-jasmine": "~0.2",
     "karma-ng-html2js-preprocessor": "^0.1.0",
-    "karma-phantomjs-launcher": "~0.1.4"
+    "karma-phantomjs-launcher": "~0.1.4",
+    "wnpm-ci": "latest"
   },
   "scripts": {
     "build": "gulp",
     "test": "gulp test",
     "serve": "gulp watch",
-    "release": "gulp tag"
+    "release:bower": "gulp tag",
+    "release": "wnpm-release --no-shrinkwrap"
   },
   "author": "Alon Yehezkel <alony@wix.com>",
   "license": "MIT"
